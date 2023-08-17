@@ -55,10 +55,15 @@ const Home = () => {
     }
   }
 
-  async function eliminarTarea() {
+  async function eliminarTarea(id) {
+    const newTodolist = todos.filter((item,index)=> id != index)
     try {
       let response = await fetch(url, {
-        method: "DELETE"
+        method: "PUT",
+        headers:{
+          "Content-Type": "application/json"
+        }, 
+        body: JSON.stringify(newTodolist)
       });
       if (!response.ok) {
         console.error(`Error en la petición: ${response.status} - ${response.statusText}`);
@@ -144,7 +149,7 @@ const Home = () => {
             <FontAwesomeIcon
               icon={faTimes}
               style={{ color: "#c800ff", cursor: "pointer" }}
-              onClick={() => eliminarTarea()}
+              onClick={() => eliminarTarea(index)}
             />
             <FontAwesomeIcon
               icon={faEdit}
